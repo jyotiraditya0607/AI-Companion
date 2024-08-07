@@ -17,20 +17,24 @@ export const Categories = ({
 
     const categoryId = searchParams.get("categoryId");
 
-    const onClick = (id: string) => {
-        const query = { categoryId: id };
+    const onClick = (id?: string) => {
+        const query = id ? { categoryId: id } : {};
+
+        const currentUrl = new URL(window.location.href);
+        const baseUrl = currentUrl.origin + currentUrl.pathname;
 
         const url = qs.stringifyUrl({
-            url: window.location.href,
+            url: baseUrl,
             query,
         }, { skipNull: true });
 
         router.push(url);
     }
+
     return (
         <div className="w-full overflow-x-auto space-x-2 flex p-1">
             <button
-                onClick={() => onClick(undefined)}
+                onClick={() => onClick()}
                 className={cn(`
                     flex
                     items-center
